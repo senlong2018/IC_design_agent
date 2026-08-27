@@ -5,22 +5,79 @@ argument-hint:
 ---
 
 
-| 输入项 | 含义 |
-|---|---|
-| **Functional Specification** | 功能规格。定义芯片或模块“要实现什么功能”； |
-| **Interface / Address / Register Specification Package** | 接口、地址、寄存器规格包，模块端口列表； |
-| **Clock & Reset Specification** | 时钟与复位规格，定义时钟源和复位源； |
-| **Power Specification** | 电源规格（如果有）。定义电源域、是否有低功耗模式、Clock Gating、及上下电行为。 |
-| **Interrupt / Error / Exception Specification** | 中断：定义触发条件、优先级、屏蔽方式、状态记录、清除方式；错误/异常：发生后的处理行为。 |
-| **Debug / Security Specification** | 调试与安全规格。定义 Debug 访问、Trace、诊断能力、权限控制、安全状态、访问保护及非法访问处理规则。 |
-| **Boundary / Corner Behavior Definition** | 边界和特殊场景行为定义。例如满/空、溢出、非法输入、并发事件、极限值、Reset 过程中访问等特殊情况。 |
-| **模块上下游** | 说明模块的上下游。 |
-| **HW / SW Partition** | 软硬件划分。明确哪些功能由 RTL 硬件实现，哪些功能由 Firmware/Software 实现，以及软硬件之间的控制边界。 |
-| **Dataflow / Control-flow Package** | 数据流/控制流定义（如果有）。描述业务数据如何在模块之间流动，以及命令、状态、握手、调度等控制信息如何传播。 |
-| **Memory Architecture** | 存储架构（如果有）。定义 SRAM、ROM、Cache、Buffer 等存储资源如何组织，包括容量、端口、带宽、访问方式、共享关系等。 |
-| **Interconnect Architecture + Interface / Bandwidth Table** | 互联架构及接口/带宽表。定义模块之间采用 AXI、AHB、APB、NoC、Stream 等何种互联，以及位宽、频率、带宽、吞吐率等要求。 |
-| **Address / Memory Mapping** | 地址/内存映射。定义寄存器、Memory、外设等在系统地址空间中的地址范围和映射关系。 |
-| **Clock / Power Domain Definition** | 时钟域/电源域划分。规定每个模块属于哪个 Clock Domain、Power Domain，以及哪些接口存在 CDC、RDC 或跨电源域问题。 |
-| **Resource Budget** | 资源预算。规定某模块允许使用的 SRAM、FIFO、计算单元、总线资源、带宽等资源额度。 |
-| **Performance Model / Analysis Report** | 性能模型和分析报告(如果有)。分析系统吞吐率、延迟、带宽、并发度、利用率和瓶颈，为流水线、FIFO、并行度等设计提供依据。 |
-| **Preliminary PPA Budget** | 初步 PPA 预算。为模块分配 **Power、Performance、Area** 目标，例如最高功耗、目标频率、面积上限。 |
+Canonical 输入资产	来源
+[S02-O06] Memory / IO Library Package
+[S02-O07] IP Registry + IP Deliverable Manifest	S02
+[S03-O04] Interface / Address / Register Specification Package
+[S03-O05] Clock & Reset Specification
+[S03-O06] Power Specification
+[S03-O07] Interrupt / Error / Exception Specification
+[S03-O08] DFT Specification
+[S03-O09] Debug / Security Specification
+[S03-O10] Software Programming / HW-SW Interface Specification
+[S03-O13] Structured Spec Package（Requirement DB / Interface & Register Schema / Clock-Reset & Constraint Table / Behavior Rule / Req→Verification）
+[S03-O14] Open Issue List
+[S03-O15] Spec Baseline / Version Manifest	S03
+[S04-O02] HW / SW Partition
+[S04-O03] Chip Block Diagram + Module Inventory / Responsibility
+[S04-O05] Memory Architecture
+[S04-O06] Interconnect Architecture + Interface / Bandwidth Table
+[S04-O07] Address / Memory Mapping
+[S04-O08] Clock / Power Domain Definition	S04
+[S04-O01] System Architecture Specification
+[S04-O04] Dataflow / Control-flow Package
+[S04-O12] Architecture Decision / Open Issue Log	S04
+[参考]
+[S05-O01] Microarchitecture Specification
+[S05-O02] Datapath + Numerical Rule Package
+[S05-O03] Control / FSM / Priority-Arbitration Rule Package
+[S05-O04] Pipeline Definition + Timing Diagram
+[S05-O05] Signal-level Interface Definition
+[S05-O06] Buffer / FIFO Specification
+[S05-O07] Register / Internal Control Map
+[S05-O08] Clock / Reset / CDC Rules
+[S05-O09] Error / Exception / Boundary Behavior
+[S05-O13] Microarchitecture Version Manifest	S05
+[S05-O10] Performance / Resource Estimate	S05
+[参考]
+[S05-O12] Optional RTL Skeleton	S05
+[可选]
+[S06-O01] Algorithm / Functional Reference Model Package
+[S06-O02] Bit-true Model
+[S06-O09] Model Configuration
+[S06-O10] Model Validation + Version / Coverage Manifest	S06
+[参考]
+[S08-O01] Lint Report
+[S08-O02] CDC / RDC Report Package
+[S08-O03] Low-power Static Check Report
+[S08-O04] X-propagation Report
+[S08-O05] Structural Check Report
+[S08-O06] Static Violation Database
+[S08-O07] Waiver List	S08
+[反馈]
+[S09-O06] Simulation Log + Waveform
+[S09-O07] Scoreboard + Assertion Result
+[S09-O10] Failure / Bug Database	S09
+[反馈]
+[S10-O02] Formal Proof Report
+[S10-O03] Formal Counterexample Database	S10
+[反馈]
+[S25-O08] Design Re-spin Change Request	S25
+[条件反馈]
+
+Canonical 输出资产	去向
+[S07-O01] RTL Source Package（Source Tree / Top / Subsystem）
+[S07-O02] Filelist / Parameters / Macros / Build Config	S08 / S09 / S10 / S11 / S12 / S13
+[S07-O03] Wrapper / CSR RTL	S08 / S09 / S11 / S12
+[S07-O04] SVA / Assertion Set	S09 / S10
+[S07-O05] UPF	S08 / S11 / S12 / S14 / S16 / S20
+[S07-O06] Initial SDC	S08 / S11 / S12 / S14
+[S07-O07] Register Description / CSR Schema	S09 / S24
+[S07-O08] RTL Design Documentation	S08 / S09[参考] / S13[参考]
+[S07-O09] Unit-level Verification Environment	S09
+[S07-O10] Simulation / Synthesis / Regression Configuration	S09 / S10[参考] / S12
+[S07-O11] IP Integration Manifest	S12[参考] / S14[参考] / S21[Gate]
+[S07-O12] Clock / Reset Map	S08 / S09[参考] / S11[参考] / S14[参考]
+[S07-O13] RTL Dependency Graph	S08[参考] / S09[参考] / S12[参考]
+[S07-O14] RTL Known Issue List	S08 / S09 / S21[Gate] / S24[参考]
+[S07-O15] RTL Release Manifest	S08 / S09 / S10 / S11 / S12 / S13 / S21[Gate]
